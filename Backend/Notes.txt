@@ -1,0 +1,192 @@
+create token 
+1.https://airtable.com/create/tokens/new - visit this 
+2.Enter name 
+3. add scopes
+4. choose the base
+
+the token generated is the api key 
+keep it in .env file 
+now you canget the data by this url- 
+https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${TABLE_NAME}
+and send Authorization : Bearer API_key
+
+https://airtable.com/create/tokens- from here you can see your created token
+
+to get base id for the table 
+1. airtable/api
+2. click on desired base 
+3. another page appears that will show u the base id for that table
+
+for updation - patch req and it will chnge only the specified field 
+in PUT req it will perform a destructive update and clear all unincluded fields
+
+Your request body should include an array of up to 10 record objects. 
+Each of these objects should have an id property representing the record ID 
+and a fields property which contains all of your record's cell values by field name or field id 
+for all of your record's cell values by field name.
+
+to see api and create api
+https://app.nocodeapi.com/dashboard/api/airtable
+
+API end point : 
+https://v1.nocodeapi.com/shreyavats/airtable/JzmBVHfXbusDIUCl
+
+How to create api 
+1. visit this site - https://app.nocodeapi.com/setup
+2. then view marketplace
+3. click on airtable
+4. then ur created apii will be visible here
+5. now use this api option
+6. then a pop up appears 
+there u will see get api ,post,update records, get single records,delete records,etc and 
+so on..
+7. on right hand side you will see code snippet and response 
+8. you will also get the option to click and test api 
+9. below the url yopu will see the option and things you have to specify 
+10. you have to specify the name of airtable 
+
+Ques: what type of DB is airtable?
+Answ: Airtable is neither a traditional SQL nor a typical NoSQL database. 
+Instead, it is a hybrid database-spreadsheet system that has characteristics of both relational (SQL) and NoSQL databases.
+
+Its cloud based ,low code database with spreadsheet like interface
+we can also create relational like db using lined record fields similar to FK in SQL
+
+1.It has Flexible, but not structured
+2.It uses api not direct queries
+3.table based data model
+
+to add data u send req using axios and send data in body as we were doing earlier 
+always include authorization: bearer API key
+
+follow the steps-
+1. npm i airtable
+2. const Airtable = require("airtable");
+3. create configuration for airtable
+4. const base = new Airtable({ apiKey: process.env.API_key }).base(process.env.AIRTABLE_BASE_ID);
+5. TABLE_NAME = process.env.TableName;
+6. now you can use this base to perform crud operations on the table 
+
+
+    -----CRUD------ 
+1.Use base(TABLE_NAME).create() to insert data into Airtable.
+If successful, return the newly created task as JSON.
+
+2.Calls base(TABLE_NAME).select().all() → Fetches all tasks from Airtable.
+Maps through records and returns a clean JSON response.
+
+3.Call base(TABLE_NAME).update(recordId,{fields}) with the task ID to modify data.
+
+4. If you want to get data of any specific usrr by email or password (login)
+then use --
+const record = await base(TABLE_NAME).select({
+    filterByFormula: `{Email}='${email}'`
+}).all();
+if(record.length==0){
+    return res.json({message:"UsernotFound"})
+}
+5. to delete data 
+base(TABLE_NAME).destroy(recordId);
+its id created by the airtable and sent to frontend while initial data is created .
+
+
+--send response---
+otherwise convert data into proper json format 
+Multiple records	records.map(record => ({ id: record.id, ...record.fields }))
+Single record	const record = records[0]; res.json({ id: record.id, ...record.fields });
+
+res.json(records.map(record => ({ id: record.id, ...record.fields })));
+
+here .all find all matching records and if not found return an empty array
+
+---options in .select({options})---
+1.we can use fields
+.select({
+        fields: ["Name", "Email"] // Only fetch "Name" and "Email"
+}) 
+to specify what fields to fetch
+
+2. To limit the no. of records(helpful in pagination)
+.select({
+        maxRecords: 5 // Get only 5 records
+    })
+
+3.If you expect a large number of records, set the number of records per page.
+.select({
+    maxRecords: 5 // Get only 5 records
+})
+
+4. Sort data by fields 
+.select({
+    sort: [{ field: "Name", direction: "asc" }] // Sort by "Name" in ascending order
+})
+
+5. if uh have view you can fetch data from it 
+.select({
+    view: "Active Users"
+})
+
+6.📌 Find Users Created After a Certain Date
+ .select({
+        filterByFormula: `IS_AFTER({Created At}, '2024-01-01')`
+    })
+
+7. if you want to find user having both those fields value use AND 
+.select({
+        filterByFormula: `AND({Status} = 'Active', {Role} = 'Admin')`
+    })
+
+8. if we want to find data from table if any of condition matches use OR
+.select({
+    filterByFormula: `OR({Priority} = 'High', {Status} = 'Pending')`
+})
+
+Note : airtable does not have default field for recordID THAT it creates unique for each data idf uh want to search by that id 
+use - filterByFormula: `RECORD_ID() = '${recordId}'`
+
+
+---cloudinary---
+
+npm i cloudinary
+const cloudinary = require("cloudinary").v2;
+
+//pass a config object
+cloudinary.config({
+    cloud_name:"cloud Name",\
+    api_key:process.env.Cloud_API_key,
+    secure:true,
+})
+image:"path of image";//ref to actual file in system
+
+// now you can use for uploading media to cloud 
+cloudinary.uploader.upload(image).then(result =>{
+    console.log(result.url);
+})
+if u click on that url cloudinary shows ur image 
+
+u can use async/await for this (for single image)
+async function uploadImage(){
+    const result = await cloudinary.uploader.upload(image);
+    clg(result.url,result.secure_url);
+}
+
+in case of multiple images - use for of images-array 
+for(const image of images){
+    const result = await cloudinary.uploader.upload(image);
+    clg(result.url,result.secure_url);
+}
+
+--- store like this in airtable ---
+base("Products").create(
+  {
+    BarcodeImage: [{ url: "https://example.com/barcode.png" }],
+  },
+  (err, record) => {
+    if (err) console.error(err);
+    else console.log("Barcode stored:", record.id);
+  }
+);
+
+in case of array of images 
+first chnge it into format of {url:"imge url"} then store in array then to airtable 
+

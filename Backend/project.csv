@@ -1,0 +1,7 @@
+Task ID,Task Name,Assigned To,Due Date,Priority,Status,Project,Notes
+101,Design Homepage,John Doe,2025-03-15,High,In Progress,Website Redesign,Focus on user experience
+102,Write Blog Post,Jane Smith,2025-03-18,Medium,Not Started,Content Marketing,SEO optimization required
+103,Fix Login Bug,Mark Lee,2025-03-10,High,Completed,App Development,Critical issue for users
+104,Client Meeting,Anna Kim,2025-03-12,Low,Scheduled,Sales,Prepare presentation slides
+105,Product Launch Email,Emily Chen,2025-03-20,High,Not Started,Marketing,Needs approval from manager
+106,Backend API Optimization,David Brown,2025-03-22,High,In Progress,App Development,Reduce response time

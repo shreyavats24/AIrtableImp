@@ -1,0 +1,22 @@
+Ques: How can we create table? do we have to create table manually? 
+coz chtgpt says u can only create table manually. how to tell types of the fields than?
+
+Ques: How to get data of a ref field? if i dont want to traverse the whole data? optimized way is to ue expand? 
+but when i created a ref task field two feilds are created now i dont know which one to use and how to specify it in expand field?
+
+Ques: Dynamic fields? what are the fields req to create ?
+
+Ques: what to use for email verification? nodemailer or something else?
+
+Ques: what exactly is the project ? can uh give some basic idea about it? 
+so i can think of how to approach things and learn all things those are needed?
+
+Ques: What to use for authentication? jsonwebtoken? 
+
+Ques: This airtable req agr app.js me bna le to ye base access hp pyega ? 
+ya isko b ek alg file me dalke hr jgh base require kr le?
+
+Ques: jo react me functionality dalni hai vo hi part krna hai nh hume ? 
+UI design kon krke dega? 
+
+Ques: file upload - cloudinary npm package - create account 
