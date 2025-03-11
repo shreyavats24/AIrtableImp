@@ -233,3 +233,4 @@ No manual indexing like traditional db (SQL,MongoDB)- it automatically optimizes
 It have internal indexing - 
 1. Primary Fields - first col of the table
 2. Linked records - lookups 
+
