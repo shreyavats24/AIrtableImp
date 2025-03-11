@@ -1,0 +1,14 @@
+src - include all these 
+controllers- handler functions 
+services- auth/email (helper functions)
+middlewares- auth middleware
+routes - endpoints 
+public - static files 
+utils- ? 
+config - ?
+
+-- outside src ---
+tests - if needed (automated test cases)
+app.js
+node_modules
+

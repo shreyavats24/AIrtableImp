@@ -190,3 +190,46 @@ base("Products").create(
 in case of array of images 
 first chnge it into format of {url:"imge url"} then store in array then to airtable 
 
+for pagination 
+you can not use async await directly 
+beacuse it doesnt return promise 
+you have to wrap it inside a promise 
+--- For Exmple ---
+const fetchFirstPageRecords = async () => {
+    try {
+        const records = await new Promise((resolve, reject) => {
+            table.select({ pageSize: 10 }).firstPage((err, records) => {
+                if (err) reject(err);
+                else resolve(records);
+            });
+        });
+
+        console.log(records.map(r => r.fields));
+    } catch (error) {
+        console.error("Error fetching records:", error);
+    }
+};
+
+fetchFirstPageRecords();
+
+For CRUD operations we can use async await directly since most of crud functions returns promise
+for eg : .find(), .create(), .update(), .destroy()
+but for .select() - with .all 
+rest with pagination like .eachPage and also with firstPage we have to wrap them up in a promise to use async await 
+
+For efficiently fetching data 
+1. fetch only required fields 
+2. use pageSize for batching ( airtable by default return 100 records per request) - small datasets
+3. For large datasets - use offset - using manual pagination 
+it lets you fetch small chunks of data at a time - 
+4. instead of fetching all the data use filterByFormula,sort that leads to reduce API load.
+5. create a view anf fetch based on that view 
+
+
+---Indexing in Airtable---
+It improves the query performance
+No manual indexing like traditional db (SQL,MongoDB)- it automatically optimizes the query based on filter and views 
+
+It have internal indexing - 
+1. Primary Fields - first col of the table
+2. Linked records - lookups 

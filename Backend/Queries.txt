@@ -13,10 +13,14 @@ so i can think of how to approach things and learn all things those are needed?
 
 Ques: What to use for authentication? jsonwebtoken? 
 
-Ques: This airtable req agr app.js me bna le to ye base access hp pyega ? 
+Ques: This airtable req agr app.js me bna le to ye base access ho pyega ? 
 ya isko b ek alg file me dalke hr jgh base require kr le?
 
 Ques: jo react me functionality dalni hai vo hi part krna hai nh hume ? 
 UI design kon krke dega? 
 
 Ques: file upload - cloudinary npm package - create account 
+
+Ques: tests/ folder , we keep test ? whats that how to use that? 
+
+Ques: 
